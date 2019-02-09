@@ -12,10 +12,11 @@ public class UserModel {
 
 	public Connection jdbc_connection;
 	public PreparedStatement preparedStatement;
-	public String databaseName = "UserDB", tableName = "UserTable", dataFile = "users.txt";
+	public String databaseName = "userdb", tableName = "UserTable", dataFile = "users.txt";
 
-	public String connectionInfo = "jdbc:mysql://localhost:3306/userdb?autoReconnect=true&useSSL=false",
-			login = "run_program", password = "password";
+	public String connectionInfo = "jdbc:mysql://localhost:3306/userdb?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true",
+			login = "root", password = "password";
+	
 
 	/**
 	 * The constructor for the Model class establishes a connection to the database.
@@ -379,7 +380,7 @@ public class UserModel {
 
 		// You should comment this line out once the first database is created (either
 		// here or in MySQL workbench)
-		userInfo.createDB();
+		//userInfo.createDB();
 
 		userInfo.createTable();
 
