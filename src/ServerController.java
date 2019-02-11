@@ -37,11 +37,15 @@ public class ServerController implements Runnable, Constants {
                 e.printStackTrace();
             }
             String query = userInput.getQuery();
+            
             int action = userInput.getAction();
+            System.out.println(query);
+            System.out.println(action);
         
             	
             switch(action){
                 case SEARCH_LAST_NAME:
+                	System.out.println("in search last name switch");
             		userOutput = new UserWrapper();
                 	if(db.searchUserLastName(query) != null) {
                 		userOutput.setUserList(db.searchUserLastName(query));
@@ -52,9 +56,10 @@ public class ServerController implements Runnable, Constants {
                 		userOutput.setUserList(null);
                 		write(userOutput);
                 	}
-
-//                	break;
+                	break;
+                	
                 case SEARCH_USER_ID:
+                	System.out.println("in search id switch");
             		userOutput = new UserWrapper();
                 	if(db.searchUserID(Integer.parseInt(query)) != null) {
                 		userOutput.setUserList(db.searchUserID(Integer.parseInt(query)));
@@ -65,8 +70,10 @@ public class ServerController implements Runnable, Constants {
                 		userOutput.setUserList(null);
                 		write(userOutput);
                 	}
-//                	break;
+                	break;
+                	
                 case SEARCH_USER_TYPE:
+                	System.out.println("in search type switch");
                 	userOutput = new UserWrapper();
                 	if(db.searchUserType(query) != null) {
                 		userOutput.setUserList(db.searchUserType(query));
@@ -77,8 +84,10 @@ public class ServerController implements Runnable, Constants {
                 		userOutput.setUserList(null);
                 		write(userOutput);
                 	}
-//                	break;
+                	break;
+                	
                 case DELETE_USER:
+                	System.out.println("in delete switch");
             		userOutput = new UserWrapper();
                 	if(db.deleteUser(Integer.parseInt(query)) == DELETE_SUCCESS) {
                 		userOutput.setAction(DELETE_SUCCESS);
@@ -88,9 +97,10 @@ public class ServerController implements Runnable, Constants {
                 		userOutput.setUserList(null);
                 		write(userOutput);
                 	}
+                	break;
                 	
-//                	break;
                 case ADD_USER:
+                	System.out.println("in add switch");
                 	userOutput = new UserWrapper();
                 	UserModel addUser = userInput.getUserList().get(0);
                 	if(db.addUser(addUser) == ADD_SUCCESS) {
@@ -102,8 +112,10 @@ public class ServerController implements Runnable, Constants {
                 		write(userOutput);
                 	}
                 	
-//                	break;
-                case UPDATE_USER:                	
+                	break;
+                	
+                case UPDATE_USER:
+                	System.out.println("in update switch");                	
                 	userOutput = new UserWrapper();
                 	UserModel updateUser = userInput.getUserList().get(0);
                 	if(db.updateExistingUser(updateUser) == UPDATE_SUCCESS) {
@@ -115,9 +127,8 @@ public class ServerController implements Runnable, Constants {
                 		write(userOutput);
                 		
                 	}
-                	
-                	
-                	//break;
+
+                	break;
             }
 
         }
