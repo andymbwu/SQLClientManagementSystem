@@ -12,6 +12,7 @@ public class ServerController implements Runnable, Constants {
 	private ObjectInputStream objIn = null;
 
 	private UserWrapper userInput;
+	private UserWrapper userOutput;
 
 	public ServerController (DBController db, Socket socket) {
 		this.aSocket = socket;
@@ -25,9 +26,10 @@ public class ServerController implements Runnable, Constants {
 	}
 	@Override
 	public void run() {
-        while (true) {
-            try {
+        while (true) {        	
+        	try {
                 userInput = (UserWrapper)objIn.readObject();
+                
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
@@ -37,12 +39,67 @@ public class ServerController implements Runnable, Constants {
             int action = userInput.getAction();
             UserModel user = userInput.getUserList().get(0);
             switch(action){
-                case()
+                case SEARCH_LAST_NAME:
+                	if(db.searchUserLastName(user.getLastName()) != null) {
+                		userOutput = new UserWrapper();
+                		userOutput.setUserList(db.searchUserLastName(user.getLastName()));
+                		objOut.writeObject(userOutput);
+                	} else {
+                		userOutput.setAction(SEARCH_FAIL);
+                		userOutput.setUserList(null);
+                		objOut.writeObject(userOutput);
+                	}
+
+//                	break;
+                case SEARCH_USER_ID:
+                	if(db.searchUserLastName(user.getLastName()) != null) {
+                		userOutput = new UserWrapper();
+                		userOutput.setUserList(db.searchUserID(user.getID()));
+                		objOut.writeObject(userOutput);
+                	} else {
+                		userOutput.setAction(SEARCH_FAIL);
+                		userOutput.setUserList(null);
+                		objOut.writeObject(userOutput);
+                	}
+//                	break;
+                case SEARCH_USER_TYPE:
+                	if(db.searchUserLastName(user.getLastName()) != null) {
+                		userOutput = new UserWrapper();
+                		userOutput.setUserList(db.searchUserType(user.getUserType()));
+                		objOut.writeObject(userOutput);
+                	} else {
+                		userOutput.setAction(SEARCH_FAIL);
+                		userOutput.setUserList(null);
+                		objOut.writeObject(userOutput);
+                	}
+//                	break;
+                case DELETE_USER:
+                	if(db.deleteUser(user.getID()) == DELETE_SUCCESS) {
+                		userOutput = new UserWrapper();
+                		userOutput.setAction(DELETE_SUCCESS);
+                		
+                	}
+                	
+                	
+                	
+                	
+                	
+//                	break;
+                case ADD_USER:
+                	db.addUser(user, this);
+//                	break;
+                case UPDATE_USER:
+                	db.updateExistingUser(user, this);
+                	//break;
             }
 
         }
-
-
+        
+	}
 	
+	public void write() {
+		
+		
+	}
 	
 }

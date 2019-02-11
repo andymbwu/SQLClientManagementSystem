@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 /**
  * This is the class that connects the logic of the program (UserModel) to the
@@ -17,10 +18,10 @@ public class UserController implements Constants {
     private UserModel theModel;
 
     private UserWrapper theWrapper;
-    private ObjectOutputStream objOut = null;
+//    private ObjectOutputStream objOut = null;
 
 
-    public UserController(UserView theView, UserModel theModel) {
+    public UserController(UserView theView, UserModel theModel, ClientCommunication comm) {
         this.theView = theView;
         this.theModel = theModel;
 
@@ -37,20 +38,15 @@ public class UserController implements Constants {
                 theWrapper.setUserList(null);
                 if (theView.checkRadioButtonUserID() == true) {
 //					theView.appendScrollPaneTextArea("");
-                    theWrapper.setAction(SEARCHUSERID);
+                    theWrapper.setAction(SEARCH_USER_ID);
                 } else if (theView.checkRadioButtonLastName() == true) {
 //                    theView.appendScrollPaneTextArea(theModel.searchUserLastName(theView.getSearchParameter()));
-                    theWrapper.setAction(Constants.SEARCHLASTNAME);
+                    theWrapper.setAction(Constants.SEARCH_LAST_NAME);
                 } else if (theView.checkRadioButtonUserType() == true) {
 //                    theView.appendScrollPaneTextArea(theModel.searchUserType(theView.getSearchParameter()));
-                    theWrapper.setAction(Constants.SEARCHUSERTYPE);
+                    theWrapper.setAction(Constants.SEARCH_USER_TYPE);
                 }
-                try {
-                    objOut.writeObject(theWrapper);
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-//                theView.appendScrollPaneTextArea()
+                comm.write(theWrapper);
             }
         });
 
@@ -82,7 +78,7 @@ public class UserController implements Constants {
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting()) {
                     JList source = (JList) event.getSource();
-                    User temp = (User) source.getSelectedValue();
+                    UserModel temp = (UserModel) source.getSelectedValue();
                     theView.enableDeleteButton();
                     theView.enableSaveButton();
                     if (temp != null) {
@@ -129,16 +125,19 @@ public class UserController implements Constants {
             @Override
             public void actionPerformed(ActionEvent e) {
 //                theModel.deleteUser(Integer.parseInt(theView.getID()));
-                theWrapper.setAction(DELETEUSER);
+                theWrapper.setAction(DELETE_USER);
                 theWrapper.setUserList(null);
                 theWrapper.setQuery(theView.getID());
-                try {
-                    objOut.writeObject(theWrapper);
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-                JOptionPane.showMessageDialog(null, "User successfully deleted!", "Delete User",
-                        JOptionPane.INFORMATION_MESSAGE);
+                comm.write(theWrapper);
+                
+//                try {
+//                    objOut.writeObject(theWrapper);
+//                    System.out.println("Delete user written to socket");
+//                } catch (IOException e1) {
+//                    e1.printStackTrace();
+//                }
+//                JOptionPane.showMessageDialog(null, "User successfully deleted!", "Delete User",
+//                        JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
@@ -188,10 +187,21 @@ public class UserController implements Constants {
                             "Phone number must not be blank and must be in format " + "### - ### - ####.", "Error",
                             JOptionPane.WARNING_MESSAGE);
                 } else {
-                    User temp = new User(firstName, lastName, address, postalCode, phoneNumber, userType);
-                    theModel.addUser(temp);
-                    JOptionPane.showMessageDialog(null, "User successfully added!", "Add New User",
-                            JOptionPane.INFORMATION_MESSAGE);
+                	theWrapper.setAction(ADD_USER);
+
+                	ArrayList<UserModel> userList = new ArrayList<UserModel>();
+                	UserModel user = new UserModel(firstName, lastName, address, postalCode, phoneNumber, userType);
+                	userList.add(user);
+                    theWrapper.setUserList(userList);
+                    
+                    comm.write(theWrapper);
+                    
+//                    try {
+//                        objOut.writeObject(theWrapper);
+//                        System.out.println("Add user written to socket");
+//                    } catch (IOException e1) {
+//                        e1.printStackTrace();
+//                    }
                 }
             }
         });
@@ -244,15 +254,24 @@ public class UserController implements Constants {
                             "Phone number must not be blank and must be in format " + "### - ### - ####.", "Error",
                             JOptionPane.WARNING_MESSAGE);
                 } else {
-                    User temp = new User(Integer.parseInt(id), firstName, lastName, address, postalCode,
-                            phoneNumber, userType);
-                    theModel.updateExistingUser(temp);
-                    JOptionPane.showMessageDialog(null, "User information updated successfully!", "Update User",
-                            JOptionPane.INFORMATION_MESSAGE);
+                	
+                	theWrapper.setAction(UPDATE_USER);
+
+                	ArrayList<UserModel> userList = new ArrayList<UserModel>();
+                	UserModel user = new UserModel(firstName, lastName, address, postalCode, phoneNumber, userType);
+                	userList.add(user);
+                    theWrapper.setUserList(userList);
+                    
+                    comm.write(theWrapper);
+                    
+//                    try {
+//                        objOut.writeObject(theWrapper);
+//                        System.out.println(" written to socket");
+//                    } catch (IOException e1) {
+//                        e1.printStackTrace();
+//                    }
                 }
             }
         });
-
     }
-
 }

@@ -2,15 +2,17 @@
  * (2D array of characters) is created and initialized with spaces, the SPACE_CHAR constant. The X player
  * and O player are only allowed to mark the board with the LETTER_X ('X') and LETTER_O ('O') respectively. */
 public interface Constants {
-	static final int SEARCHLASTNAME = 1;
-	static final int SEARCHUSERID = 2;
-	static final int SEARCHUSERTYPE = 3;
-	static final int DELETEUSER = 4;
-	static final int FIVE = 5;
-	static final int SIX = 6;
-	static final int SEVEN = 7;
-	static final int EIGHT = 8;
-	static final int NINE = 9;
-	static final int TEN = 10;
-	static final int ELEVEN = 11;
+	static final int SEARCH_LAST_NAME = 1;
+	static final int SEARCH_USER_ID = 2;
+	static final int SEARCH_USER_TYPE = 3;
+	static final int SEARCH_FAIL = 4;
+	static final int DELETE_USER = 5;
+	static final int ADD_USER = 6;
+	static final int UPDATE_USER = 7;
+	static final int ADD_SUCCESS = 8;
+	static final int ADD_FAIL = 9;
+	static final int DELETE_SUCCESS = 10;
+	static final int DELETE_FAIL = 11;
+	static final int UPDATE_SUCCESS = 12;
+	static final int UPDATE_FAIL = 13;
 }

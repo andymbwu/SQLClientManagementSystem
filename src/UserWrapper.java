@@ -3,11 +3,15 @@ import java.util.ArrayList;
 
 public class UserWrapper implements Constants, Serializable {
 
-	private int action = 0;
-	private String query = "";
+	private int action;
+	private String query;
 	private ArrayList<UserModel> userList;
 
-	public UserWrapper() {}
+	public UserWrapper() {
+		this.action=0;
+		this.query="";
+		this.userList=null;
+	}
 
 	public UserWrapper(UserModel user, String query, int action){
 		this.action = action;

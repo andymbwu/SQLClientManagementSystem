@@ -8,7 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class DBController {
+
+public class DBController implements Constants {
+	
+	private ServerController sc;
 
 	public Connection jdbc_connection;
 	public PreparedStatement preparedStatement;
@@ -93,7 +96,7 @@ public class DBController {
 			Scanner sc = new Scanner(new FileReader(dataFile));
 			while (sc.hasNext()) {
 				String userInfo[] = sc.nextLine().split(";");
-				addUser(new User(userInfo[0], userInfo[1], userInfo[2], userInfo[3], userInfo[4],
+				addUser(new UserModel(userInfo[0], userInfo[1], userInfo[2], userInfo[3], userInfo[4],
 						userInfo[5]));
 
 			}
@@ -110,7 +113,7 @@ public class DBController {
 	 * 
 	 * @param user - User object to add to the database.
 	 */
-	public void addUser(User user) {
+	public void addUser(UserModel user) {
 		String sql = "INSERT INTO " + tableName + " VALUES ( NULL, ?, ?, ?, ?, ?, ?);";
 		try {
 			preparedStatement = jdbc_connection.prepareStatement(sql);
@@ -216,7 +219,7 @@ public class DBController {
 	 * @param user - User object that contains all of the user information
 	 *               that needs to be updated.
 	 */
-	public void updateExistingUser(User user) {
+	public void updateExistingUser(UserModel user) {
 
 		String sql = "UPDATE " + tableName + " SET FIRSTNAME = ?, LASTNAME = ?, ADDRESS = ?,"
 				+ " POSTALCODE = ?, PHONENUMBER = ?, USERTYPE = ? WHERE ID = ?";
@@ -248,16 +251,16 @@ public class DBController {
 	 * @param lastName - last name of the user that the user is searching for.
 	 * @return - returns an array list of User objects
 	 */
-	public ArrayList<User> searchUserLastName(String lastName) {
+	public ArrayList<UserModel> searchUserLastName(String lastName) {
 		String sql = "SELECT * FROM " + tableName + " WHERE LASTNAME = ?";
 		ResultSet user;
 		try {
 			preparedStatement = jdbc_connection.prepareStatement(sql);
 			preparedStatement.setString(1, lastName);
 			user = preparedStatement.executeQuery();
-			ArrayList<User> temp = new ArrayList<User>();
+			ArrayList<UserModel> temp = new ArrayList<UserModel>();
 			while (user.next()) {
-				temp.add(new User(user.getInt("ID"), user.getString("FIRSTNAME"), user.getString("LASTNAME"),
+				temp.add(new UserModel(user.getInt("ID"), user.getString("FIRSTNAME"), user.getString("LASTNAME"),
 						user.getString("ADDRESS"), user.getString("POSTALCODE"), user.getString("PHONENUMBER"),
 						user.getString("USERTYPE")));
 			}
@@ -265,6 +268,7 @@ public class DBController {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
 		}
 
 		return null;
@@ -279,16 +283,16 @@ public class DBController {
 	 * @param userID - ID of the user that the user is searching for.
 	 * @return - returns an array list of User objects
 	 */
-	public ArrayList<User> searchUserID(int userID) {
+	public ArrayList<UserModel> searchUserID(int userID) {
 		String sql = "SELECT * FROM " + tableName + " WHERE ID = ?";
 		ResultSet user;
 		try {
 			preparedStatement = jdbc_connection.prepareStatement(sql);
 			preparedStatement.setInt(1, userID);
 			user = preparedStatement.executeQuery();
-			ArrayList<User> temp = new ArrayList<User>();
+			ArrayList<UserModel> temp = new ArrayList<UserModel>();
 			if (user.next()) {
-				temp.add(new User(user.getInt("ID"), user.getString("FIRSTNAME"), user.getString("LASTNAME"),
+				temp.add(new UserModel(user.getInt("ID"), user.getString("FIRSTNAME"), user.getString("LASTNAME"),
 						user.getString("ADDRESS"), user.getString("POSTALCODE"), user.getString("PHONENUMBER"),
 						user.getString("USERTYPE")));
 			}
@@ -310,16 +314,16 @@ public class DBController {
 	 * @param userType - type of the user that the user is searching for.
 	 * @return - returns an array list of User objects
 	 */
-	public ArrayList<User> searchUserType(String userType) {
+	public ArrayList<UserModel> searchUserType(String userType) {
 		String sql = "SELECT * FROM " + tableName + " WHERE USERTYPE = ?";
 		ResultSet user;
 		try {
 			preparedStatement = jdbc_connection.prepareStatement(sql);
 			preparedStatement.setString(1, userType);
 			user = preparedStatement.executeQuery();
-			ArrayList<User> temp = new ArrayList<User>();
+			ArrayList<UserModel> temp = new ArrayList<UserModel>();
 			while (user.next()) {
-				temp.add(new User(user.getInt("ID"), user.getString("FIRSTNAME"), user.getString("LASTNAME"),
+				temp.add(new UserModel(user.getInt("ID"), user.getString("FIRSTNAME"), user.getString("LASTNAME"),
 						user.getString("ADDRESS"), user.getString("POSTALCODE"), user.getString("PHONENUMBER"),
 						user.getString("USERTYPE")));
 			}
@@ -338,16 +342,19 @@ public class DBController {
 	 * 
 	 * @param userID - type of the user that the user is searching for.
 	 */
-	public void deleteUser(int userID) {
+	public int deleteUser(int userID) {
 		String sql = "DELETE FROM " + tableName + " WHERE ID = ?";
 		try {
 			preparedStatement = jdbc_connection.prepareStatement(sql);
 			preparedStatement.setInt(1, userID);
 			preparedStatement.executeUpdate();
+			return DELETE_SUCCESS;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		return DELETE_FAIL;
 	}
 
 	/**
@@ -375,19 +382,19 @@ public class DBController {
 	 * The main method is used to create the database and table in the database. 
 	 */
 	public static void main(String args[]) {
-		UserModel userInfo = new UserModel();
+		DBController userInfo = new DBController();
 
 		// You should comment this line out once the first database is created (either
 		// here or in MySQL workbench)
-		userInfo.createDB();
+		//userInfo.createDB();
 
-		userInfo.createTable();
+		//userInfo.createTable();
 
-		System.out.println("\nFilling the table with users");
-		userInfo.fillTable();
+		//System.out.println("\nFilling the table with users");
+		//DBController.fillTable();
 
-		System.out.println("Reading all users from the table:");
-		userInfo.printTable();
+		//System.out.println("Reading all users from the table:");
+		//DBController.printTable();
 
 		// System.out.println("\nTrying to remove the table");
 		// userInfo.removeTable();
