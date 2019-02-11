@@ -24,7 +24,12 @@ public class ClientCommunication implements Constants{
     private UserModel theModel;
     private UserWrapper theWrapper;
 
+    private UserController theController;
+
     public ClientCommunication(String serverName,int portNumber){
+        theModel = new UserModel();
+        theView = new UserView();
+        theController = new UserController(theView,theModel);
         try {
             aSocket = new Socket(serverName,portNumber);
             objOut = new ObjectOutputStream(aSocket.getOutputStream());
@@ -32,7 +37,7 @@ public class ClientCommunication implements Constants{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        UserController controller = new UserController(theView,theModel);
+
 
     }
 
@@ -147,9 +152,7 @@ public class ClientCommunication implements Constants{
      */
     public static void main(String[] args) throws IOException {
 
-        UserView theView = new UserView();
-        UserModel theModel = new UserModel();
-        ClientCommunication cm = new ClientCommunication(theView, theModel);
+        ClientCommunication cm = new ClientCommunication("localhost",9899);
 
         String textFileName = "someSongs.txt"; // Name of a text file that contains
         // song records
