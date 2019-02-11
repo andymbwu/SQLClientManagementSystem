@@ -43,15 +43,13 @@ public class ClientCommunication implements Constants{
 
     public void communicate (){
 //    	UserWrapper response
-    	
+    		theWrapper = new UserWrapper();
             while(true){
             	try {
 					theWrapper = (UserWrapper)objIn.readObject();
 				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
             	int action = theWrapper.getAction();
@@ -194,6 +192,7 @@ public class ClientCommunication implements Constants{
     public static void main(String[] args) throws IOException {
 
         ClientCommunication cm = new ClientCommunication("localhost",9899);
+        cm.communicate();
 
 //        String textFileName = "someSongs.txt"; // Name of a text file that contains
 //        // song records
@@ -215,6 +214,7 @@ public class ClientCommunication implements Constants{
 		
 		try {
 			objOut.writeObject(out);
+			objOut.reset();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

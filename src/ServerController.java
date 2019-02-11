@@ -123,6 +123,7 @@ public class ServerController implements Runnable, Constants {
 	public void write(UserWrapper u) {
 		try {
 			objOut.writeObject(u);
+			objOut.reset();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
