@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserModel implements Serializable {
+
 	private int id;
 	private String firstName;
 	private String lastName;
@@ -17,6 +18,20 @@ public class UserModel implements Serializable {
 	private String postalCode;
 	private String phoneNumber;
 	private String clientType;
+
+	public UserModel(){}
+
+	public UserModel(int id, String firstName, String lastName, String address, String postalCode, String phoneNumber, String clientType){
+		setId(id);
+		setFirstName(firstName);
+		setLastName(lastName);
+		setAddress(address);
+		setPostalCode(postalCode);
+		setPhoneNumber(phoneNumber);
+		setClientType(clientType);
+	}
+
+	private static final long serialVersionUID = 1L;
 
 	public void setId(int id){
 		this.id = id;

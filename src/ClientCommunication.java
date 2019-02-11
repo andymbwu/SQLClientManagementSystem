@@ -1,3 +1,8 @@
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.Socket;
 import java.sql.Connection;
@@ -9,32 +14,44 @@ import java.sql.Statement;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class ClientCommunication {
+public class ClientCommunication implements Constants{
 
     private Socket aSocket;
     private ObjectOutputStream objOut = null;
     private ObjectInputStream objIn = null;
-    Scanner stdIn = null;
 
-    private UserController controller;
+    private UserView theView;
+    private UserModel theModel;
+    private UserWrapper theWrapper;
+
+    public ClientCommunication(String serverName,int portNumber){
+        try {
+            aSocket = new Socket(serverName,portNumber);
+            objOut = new ObjectOutputStream(aSocket.getOutputStream());
+            objIn = new ObjectInputStream(aSocket.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        UserController controller = new UserController(theView,theModel);
+
+    }
 
     public void communicate (){
-        try {
-            aSocket = new Socket("localhost",4444);
-            System.out.println("Client connected");
-            objOut = new ObjectOutputStream(aSocket.getOutputStream());
+            while(true){
+
+
+
+            }
             UserModel model = new UserModel();
             objOut.writeObject(model);
 
             objIn = new ObjectInputStream(aSocket.getInputStream());
-            UserModel
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         UserModel model = new UserModel();
         objOut.writeObject(model))
-
-
 
     }
 
@@ -130,7 +147,9 @@ public class ClientCommunication {
      */
     public static void main(String[] args) throws IOException {
 
-        ClientCommunication cm = new ClientCommunication();
+        UserView theView = new UserView();
+        UserModel theModel = new UserModel();
+        ClientCommunication cm = new ClientCommunication(theView, theModel);
 
         String textFileName = "someSongs.txt"; // Name of a text file that contains
         // song records

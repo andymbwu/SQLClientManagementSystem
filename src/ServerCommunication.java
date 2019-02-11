@@ -35,7 +35,7 @@ public class ServerCommunication {
 			System.out.println("Create new socket error");
 			System.out.println(e.getMessage());
 		}
-		System.out.println("TicTacToe.Server is running");
+		System.out.println("Server is running");
 	}
 
 	public void runServer() {
@@ -48,7 +48,6 @@ public class ServerCommunication {
 				objOut = new ObjectOutputStream(aSocket.getOutputStream());
 				objIn = new ObjectInputStream(aSocket.getInputStream());
 
-				
 				pool.execute(sc);
 			}
 
@@ -58,9 +57,7 @@ public class ServerCommunication {
 			pool.shutdown();
 			try {
 				aSocket.close();
-//				oSocket.close();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			
