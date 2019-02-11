@@ -113,7 +113,7 @@ public class DBController implements Constants {
 	 * 
 	 * @param user - User object to add to the database.
 	 */
-	public void addUser(UserModel user) {
+	public int addUser(UserModel user) {
 		String sql = "INSERT INTO " + tableName + " VALUES ( NULL, ?, ?, ?, ?, ?, ?);";
 		try {
 			preparedStatement = jdbc_connection.prepareStatement(sql);
@@ -125,9 +125,12 @@ public class DBController implements Constants {
 			preparedStatement.setString(6, user.getUserType());
 
 			preparedStatement.executeUpdate();
+			
+			return ADD_SUCCESS;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return ADD_FAIL;
 	}
 
 	/**
