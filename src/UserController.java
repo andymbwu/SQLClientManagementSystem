@@ -45,7 +45,6 @@ public class UserController implements Constants {
 //                    theView.appendScrollPaneTextArea(theModel.searchUserType(theView.getSearchParameter()));
                     theWrapper.setAction(Constants.SEARCHUSERTYPE);
                 }
-
                 try {
                     objOut.writeObject(theWrapper);
                 } catch (IOException e1) {

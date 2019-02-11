@@ -37,8 +37,6 @@ public class ClientCommunication implements Constants{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public void communicate (){

@@ -4,7 +4,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class ServerController implements Runnable {
+public class ServerController implements Runnable, Constants {
 
 	private DBController db = null;
 	private Socket aSocket = null;
@@ -25,7 +25,6 @@ public class ServerController implements Runnable {
 	}
 	@Override
 	public void run() {
-
         while (true) {
             try {
                 userInput = (UserWrapper)objIn.readObject();
@@ -33,6 +32,12 @@ public class ServerController implements Runnable {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+            }
+            String query = userInput.getQuery();
+            int action = userInput.getAction();
+            UserModel user = userInput.getUserList().get(0);
+            switch(action){
+                case()
             }
 
         }
