@@ -16,7 +16,7 @@ public class ServerCommunication {
 	private ObjectOutputStream objOut = null;
 	private ObjectInputStream objIn = null;
 
-	public static final int port = 9899;
+	public static final int port = 9809;
 	
 	/**
 	 * Thread Pool to Handle Communication.
@@ -45,8 +45,8 @@ public class ServerCommunication {
 				System.out.println("Client has been connected");
 
 				ServerController sc = new ServerController(this.db, this.aSocket);
-				objOut = new ObjectOutputStream(aSocket.getOutputStream());
-				objIn = new ObjectInputStream(aSocket.getInputStream());
+//				objOut = new ObjectOutputStream(aSocket.getOutputStream());
+//				objIn = new ObjectInputStream(aSocket.getInputStream());
 
 				pool.execute(sc);
 			}

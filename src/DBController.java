@@ -389,31 +389,31 @@ public class DBController implements Constants {
 	 * The main method is used to create the database and table in the database. 
 	 */
 	public static void main(String args[]) {
-		DBController userInfo = new DBController();
-
-		// You should comment this line out once the first database is created (either
-		// here or in MySQL workbench)
-		//userInfo.createDB();
-
-		//userInfo.createTable();
-
-		//System.out.println("\nFilling the table with users");
-		//DBController.fillTable();
-
-		//System.out.println("Reading all users from the table:");
-		//DBController.printTable();
-
-		// System.out.println("\nTrying to remove the table");
-		// userInfo.removeTable();
-
-		try {
-			userInfo.preparedStatement.close();
-			userInfo.jdbc_connection.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			System.out.println("\nThe program is finished running");
-		}
+//		DBController userInfo = new DBController();
+//
+//		// You should comment this line out once the first database is created (either
+//		// here or in MySQL workbench)
+//		//userInfo.createDB();
+//
+//		//userInfo.createTable();
+//
+//		//System.out.println("\nFilling the table with users");
+//		//DBController.fillTable();
+//
+//		//System.out.println("Reading all users from the table:");
+//		//DBController.printTable();
+//
+//		// System.out.println("\nTrying to remove the table");
+//		// userInfo.removeTable();
+//
+//		try {
+//			userInfo.preparedStatement.close();
+//			userInfo.jdbc_connection.close();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			System.out.println("\nThe program is finished running");
+//		}
 
 	}
 

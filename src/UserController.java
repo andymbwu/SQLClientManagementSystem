@@ -48,7 +48,7 @@ public class UserController implements Constants {
 //                    theView.appendScrollPaneTextArea(theModel.searchUserType(theView.getSearchParameter()));
                     theWrapper.setAction(Constants.SEARCH_USER_TYPE);
                 }
-                comm.write(theWrapper);
+                comm.communicate(theWrapper);
             }
         });
 

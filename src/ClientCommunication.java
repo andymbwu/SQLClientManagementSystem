@@ -41,63 +41,63 @@ public class ClientCommunication implements Constants{
         }
     }
 
-    public void communicate (){
-//    	UserWrapper response
-    		theWrapper = new UserWrapper();
-            while(true){
-            	try {
-					theWrapper = (UserWrapper)objIn.readObject();
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-            	int action = theWrapper.getAction();
-            	
-            	switch(action) {
-            	case DELETE_SUCCESS:
-            		JOptionPane.showMessageDialog(null,
-                            "User was deleted successfully", "Error",
-                            JOptionPane.WARNING_MESSAGE);
-            	case DELETE_FAIL:
-               		JOptionPane.showMessageDialog(null,
-                            "User was not deleted successfully", "Error",
-                            JOptionPane.WARNING_MESSAGE);
-            	case UPDATE_SUCCESS:
-            		JOptionPane.showMessageDialog(null,
-                            "User was updated successfully", "Error",
-                            JOptionPane.WARNING_MESSAGE);
-            	case UPDATE_FAIL:
-            		JOptionPane.showMessageDialog(null,
-                            "User was not updated successfully", "Error",
-                            JOptionPane.WARNING_MESSAGE);
-            	case ADD_SUCCESS:
-            		JOptionPane.showMessageDialog(null,
-                            "User was added successfully", "Error",
-                            JOptionPane.WARNING_MESSAGE);
-            	case ADD_FAIL:
-            		JOptionPane.showMessageDialog(null,
-                            "User was not added successfully", "Error",
-                            JOptionPane.WARNING_MESSAGE);
-            	case SEARCH_FAIL:
-            	    JOptionPane.showMessageDialog(null,
-                            "No users matching the search term were found","Error",
-                            JOptionPane.WARNING_MESSAGE);
-                case SEARCH_SUCCESS:
-                    theView.appendScrollPaneTextArea(theWrapper.getUserList());
-            	}
-            	
-            	
-
-
-            }
+//    public void communicate (){
+////    	UserWrapper response
+//    		theWrapper = new UserWrapper();
+//            while(true){
+//            	try {
+//					theWrapper = (UserWrapper)objIn.readObject();
+//				} catch (ClassNotFoundException e) {
+//					e.printStackTrace();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//            	int action = theWrapper.getAction();
+//            	
+//            	switch(action) {
+//            	case DELETE_SUCCESS:
+//            		JOptionPane.showMessageDialog(null,
+//                            "User was deleted successfully", "Error",
+//                            JOptionPane.WARNING_MESSAGE);
+//            	case DELETE_FAIL:
+//               		JOptionPane.showMessageDialog(null,
+//                            "User was not deleted successfully", "Error",
+//                            JOptionPane.WARNING_MESSAGE);
+//            	case UPDATE_SUCCESS:
+//            		JOptionPane.showMessageDialog(null,
+//                            "User was updated successfully", "Error",
+//                            JOptionPane.WARNING_MESSAGE);
+//            	case UPDATE_FAIL:
+//            		JOptionPane.showMessageDialog(null,
+//                            "User was not updated successfully", "Error",
+//                            JOptionPane.WARNING_MESSAGE);
+//            	case ADD_SUCCESS:
+//            		JOptionPane.showMessageDialog(null,
+//                            "User was added successfully", "Error",
+//                            JOptionPane.WARNING_MESSAGE);
+//            	case ADD_FAIL:
+//            		JOptionPane.showMessageDialog(null,
+//                            "User was not added successfully", "Error",
+//                            JOptionPane.WARNING_MESSAGE);
+//            	case SEARCH_FAIL:
+//            	    JOptionPane.showMessageDialog(null,
+//                            "No users matching the search term were found","Error",
+//                            JOptionPane.WARNING_MESSAGE);
+//                case SEARCH_SUCCESS:
+//                    theView.appendScrollPaneTextArea(theWrapper.getUserList());
+//            	}
+//            	
+//            	
+//
+//
+//            }
 //            objOut.writeObject(model);
 //
 //            objIn = new ObjectInputStream(aSocket.getInputStream());
 //
 
 
-    }
+    
 
 //    /**
 //     * Opens a file input stream, using the data field textFileIn
@@ -191,8 +191,8 @@ public class ClientCommunication implements Constants{
      */
     public static void main(String[] args) throws IOException {
 
-        ClientCommunication cm = new ClientCommunication("localhost",9899);
-        cm.communicate();
+        ClientCommunication cm = new ClientCommunication("localhost",9809);
+//        cm.communicate();
 
 //        String textFileName = "someSongs.txt"; // Name of a text file that contains
 //        // song records
@@ -220,6 +220,61 @@ public class ClientCommunication implements Constants{
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void communicate(UserWrapper u) {
+		try {
+			objOut.writeObject(u);
+			objOut.reset();
+			
+			try {
+				theWrapper = (UserWrapper)objIn.readObject();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+        	int action = theWrapper.getAction();
+        	
+        	switch(action) {
+        	case DELETE_SUCCESS:
+        		JOptionPane.showMessageDialog(null,
+                        "User was deleted successfully", "Error",
+                        JOptionPane.WARNING_MESSAGE);
+        	case DELETE_FAIL:
+           		JOptionPane.showMessageDialog(null,
+                        "User was not deleted successfully", "Error",
+                        JOptionPane.WARNING_MESSAGE);
+        	case UPDATE_SUCCESS:
+        		JOptionPane.showMessageDialog(null,
+                        "User was updated successfully", "Error",
+                        JOptionPane.WARNING_MESSAGE);
+        	case UPDATE_FAIL:
+        		JOptionPane.showMessageDialog(null,
+                        "User was not updated successfully", "Error",
+                        JOptionPane.WARNING_MESSAGE);
+        	case ADD_SUCCESS:
+        		JOptionPane.showMessageDialog(null,
+                        "User was added successfully", "Error",
+                        JOptionPane.WARNING_MESSAGE);
+        	case ADD_FAIL:
+        		JOptionPane.showMessageDialog(null,
+                        "User was not added successfully", "Error",
+                        JOptionPane.WARNING_MESSAGE);
+        	case SEARCH_FAIL:
+        	    JOptionPane.showMessageDialog(null,
+                        "No users matching the search term were found","Error",
+                        JOptionPane.WARNING_MESSAGE);
+            case SEARCH_SUCCESS:
+                theView.appendScrollPaneTextArea(theWrapper.getUserList());
+        	}
+			
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
