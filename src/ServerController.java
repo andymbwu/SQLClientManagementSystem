@@ -40,8 +40,8 @@ public class ServerController implements Runnable, Constants {
             UserModel user = userInput.getUserList().get(0);
             switch(action){
                 case SEARCH_LAST_NAME:
+            		userOutput = new UserWrapper();
                 	if(db.searchUserLastName(user.getLastName()) != null) {
-                		userOutput = new UserWrapper();
                 		userOutput.setUserList(db.searchUserLastName(user.getLastName()));
                 		objOut.writeObject(userOutput);
                 	} else {
@@ -52,9 +52,10 @@ public class ServerController implements Runnable, Constants {
 
 //                	break;
                 case SEARCH_USER_ID:
+            		userOutput = new UserWrapper();
                 	if(db.searchUserLastName(user.getLastName()) != null) {
-                		userOutput = new UserWrapper();
                 		userOutput.setUserList(db.searchUserID(user.getID()));
+                		userOutput.setAction(SEARCH_SUCCESS);
                 		objOut.writeObject(userOutput);
                 	} else {
                 		userOutput.setAction(SEARCH_FAIL);
@@ -63,8 +64,8 @@ public class ServerController implements Runnable, Constants {
                 	}
 //                	break;
                 case SEARCH_USER_TYPE:
+                	userOutput = new UserWrapper();
                 	if(db.searchUserLastName(user.getLastName()) != null) {
-                		userOutput = new UserWrapper();
                 		userOutput.setUserList(db.searchUserType(user.getUserType()));
                 		objOut.writeObject(userOutput);
                 	} else {
@@ -74,19 +75,28 @@ public class ServerController implements Runnable, Constants {
                 	}
 //                	break;
                 case DELETE_USER:
+            		userOutput = new UserWrapper();
                 	if(db.deleteUser(user.getID()) == DELETE_SUCCESS) {
-                		userOutput = new UserWrapper();
                 		userOutput.setAction(DELETE_SUCCESS);
-                		
+                		objOut.writeObject(userOutput);
+                	} else {
+                		userOutput.setAction(DELETE_FAIL);
+                		userOutput.setUserList(null);
+                		objOut.writeObject(userOutput);
                 	}
-                	
-                	
-                	
-                	
                 	
 //                	break;
                 case ADD_USER:
-                	db.addUser(user, this);
+                	userOutput = new UserWrapper();
+                	if(db.addUser(user)) == ADD_SUCCESS) {
+                		userOutput.setAction(DELETE_SUCCESS);
+                		objOut.writeObject(userOutput);
+                	} else {
+                		userOutput.setAction(DELETE_FAIL);
+                		userOutput.setUserList(null);
+                		objOut.writeObject(userOutput);
+                	}
+                	
 //                	break;
                 case UPDATE_USER:
                 	db.updateExistingUser(user, this);
