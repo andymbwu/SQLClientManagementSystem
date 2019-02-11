@@ -44,11 +44,11 @@ public class ServerController implements Runnable, Constants {
                 	if(db.searchUserLastName(user.getLastName()) != null) {
                 		userOutput.setUserList(db.searchUserLastName(user.getLastName()));
                 		userOutput.setAction(SEARCH_SUCCESS);
-                		objOut.writeObject(userOutput);
+                		write(userOutput);
                 	} else {
                 		userOutput.setAction(SEARCH_FAIL);
                 		userOutput.setUserList(null);
-                		objOut.writeObject(userOutput);
+                		write(userOutput);
                 	}
 
 //                	break;
@@ -57,11 +57,11 @@ public class ServerController implements Runnable, Constants {
                 	if(db.searchUserLastName(user.getLastName()) != null) {
                 		userOutput.setUserList(db.searchUserID(user.getID()));
                 		userOutput.setAction(SEARCH_SUCCESS);
-                		objOut.writeObject(userOutput);
+                		write(userOutput);
                 	} else {
                 		userOutput.setAction(SEARCH_FAIL);
                 		userOutput.setUserList(null);
-                		objOut.writeObject(userOutput);
+                		write(userOutput);
                 	}
 //                	break;
                 case SEARCH_USER_TYPE:
@@ -69,22 +69,22 @@ public class ServerController implements Runnable, Constants {
                 	if(db.searchUserLastName(user.getLastName()) != null) {
                 		userOutput.setUserList(db.searchUserType(user.getUserType()));
                 		userOutput.setAction(SEARCH_SUCCESS);
-                		objOut.writeObject(userOutput);
+                		write(userOutput);
                 	} else {
                 		userOutput.setAction(SEARCH_FAIL);
                 		userOutput.setUserList(null);
-                		objOut.writeObject(userOutput);
+                		write(userOutput);
                 	}
 //                	break;
                 case DELETE_USER:
             		userOutput = new UserWrapper();
                 	if(db.deleteUser(user.getID()) == DELETE_SUCCESS) {
                 		userOutput.setAction(DELETE_SUCCESS);
-                		objOut.writeObject(userOutput);
+                		write(userOutput);
                 	} else {
                 		userOutput.setAction(DELETE_FAIL);
                 		userOutput.setUserList(null);
-                		objOut.writeObject(userOutput);
+                		write(userOutput);
                 	}
                 	
 //                	break;
@@ -92,23 +92,24 @@ public class ServerController implements Runnable, Constants {
                 	userOutput = new UserWrapper();
                 	if(db.addUser(user) == ADD_SUCCESS) {
                 		userOutput.setAction(ADD_SUCCESS);
-                		objOut.writeObject(userOutput);
+                		write(userOutput);
                 	} else {
                 		userOutput.setAction(ADD_FAIL);
                 		userOutput.setUserList(null);
-                		objOut.writeObject(userOutput);
+                		write(userOutput);
                 	}
                 	
 //                	break;
                 case UPDATE_USER:                	
                 	userOutput = new UserWrapper();
                 	if(db.updateExistingUser(user) == UPDATE_SUCCESS) {
-                		userOutput.setAction(ADD_SUCCESS);
-                		objOut.writeObject(userOutput);
+                		userOutput.setAction(UPDATE_SUCCESS);
+                		write(userOutput);
                 	} else {
-                		userOutput.setAction(ADD_FAIL);
+                		userOutput.setAction(UPDATE_FAIL);
                 		userOutput.setUserList(null);
-                		objOut.writeObject(userOutput);
+                		write(userOutput);
+                		
                 	}
                 	
                 	
@@ -119,8 +120,13 @@ public class ServerController implements Runnable, Constants {
         
 	}
 	
-	public void write() {
-		
+	public void write(UserWrapper u) {
+		try {
+			objOut.writeObject(u);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
