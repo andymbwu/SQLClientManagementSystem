@@ -43,6 +43,7 @@ public class ServerController implements Runnable, Constants {
             		userOutput = new UserWrapper();
                 	if(db.searchUserLastName(user.getLastName()) != null) {
                 		userOutput.setUserList(db.searchUserLastName(user.getLastName()));
+                		userOutput.setAction(SEARCH_SUCCESS);
                 		objOut.writeObject(userOutput);
                 	} else {
                 		userOutput.setAction(SEARCH_FAIL);
@@ -67,6 +68,7 @@ public class ServerController implements Runnable, Constants {
                 	userOutput = new UserWrapper();
                 	if(db.searchUserLastName(user.getLastName()) != null) {
                 		userOutput.setUserList(db.searchUserType(user.getUserType()));
+                		userOutput.setAction(SEARCH_SUCCESS);
                 		objOut.writeObject(userOutput);
                 	} else {
                 		userOutput.setAction(SEARCH_FAIL);
@@ -88,18 +90,28 @@ public class ServerController implements Runnable, Constants {
 //                	break;
                 case ADD_USER:
                 	userOutput = new UserWrapper();
-                	if(db.addUser(user)) == ADD_SUCCESS) {
-                		userOutput.setAction(DELETE_SUCCESS);
+                	if(db.addUser(user) == ADD_SUCCESS) {
+                		userOutput.setAction(ADD_SUCCESS);
                 		objOut.writeObject(userOutput);
                 	} else {
-                		userOutput.setAction(DELETE_FAIL);
+                		userOutput.setAction(ADD_FAIL);
                 		userOutput.setUserList(null);
                 		objOut.writeObject(userOutput);
                 	}
                 	
 //                	break;
-                case UPDATE_USER:
-                	db.updateExistingUser(user, this);
+                case UPDATE_USER:                	
+                	userOutput = new UserWrapper();
+                	if(db.updateExistingUser(user) == UPDATE_SUCCESS) {
+                		userOutput.setAction(ADD_SUCCESS);
+                		objOut.writeObject(userOutput);
+                	} else {
+                		userOutput.setAction(ADD_FAIL);
+                		userOutput.setUserList(null);
+                		objOut.writeObject(userOutput);
+                	}
+                	
+                	
                 	//break;
             }
 

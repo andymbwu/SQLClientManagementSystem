@@ -222,7 +222,7 @@ public class DBController implements Constants {
 	 * @param user - User object that contains all of the user information
 	 *               that needs to be updated.
 	 */
-	public void updateExistingUser(UserModel user) {
+	public int updateExistingUser(UserModel user) {
 
 		String sql = "UPDATE " + tableName + " SET FIRSTNAME = ?, LASTNAME = ?, ADDRESS = ?,"
 				+ " POSTALCODE = ?, PHONENUMBER = ?, USERTYPE = ? WHERE ID = ?";
@@ -238,9 +238,12 @@ public class DBController implements Constants {
 			preparedStatement.setInt(7, user.getID());
 
 			preparedStatement.executeUpdate();
+			
+			return UPDATE_SUCCESS;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return UPDATE_FAIL;
 		}
 
 	}
@@ -355,9 +358,10 @@ public class DBController implements Constants {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return DELETE_FAIL;
 		}
 		
-		return DELETE_FAIL;
+
 	}
 
 	/**
