@@ -241,32 +241,47 @@ public class ClientCommunication implements Constants{
         		JOptionPane.showMessageDialog(null,
                         "User was deleted successfully", "Error",
                         JOptionPane.WARNING_MESSAGE);
+        		break;
+        		
         	case DELETE_FAIL:
            		JOptionPane.showMessageDialog(null,
                         "User was not deleted successfully", "Error",
                         JOptionPane.WARNING_MESSAGE);
+           		break;
+           		
         	case UPDATE_SUCCESS:
         		JOptionPane.showMessageDialog(null,
                         "User was updated successfully", "Error",
                         JOptionPane.WARNING_MESSAGE);
+        		break;
+        		
         	case UPDATE_FAIL:
         		JOptionPane.showMessageDialog(null,
                         "User was not updated successfully", "Error",
                         JOptionPane.WARNING_MESSAGE);
+        		break;
+        		
         	case ADD_SUCCESS:
         		JOptionPane.showMessageDialog(null,
                         "User was added successfully", "Error",
                         JOptionPane.WARNING_MESSAGE);
+        		break;
+        		
         	case ADD_FAIL:
         		JOptionPane.showMessageDialog(null,
                         "User was not added successfully", "Error",
                         JOptionPane.WARNING_MESSAGE);
+        		break;
+        		
         	case SEARCH_FAIL:
         	    JOptionPane.showMessageDialog(null,
                         "No users matching the search term were found","Error",
                         JOptionPane.WARNING_MESSAGE);
+        	    break;
+        	    
             case SEARCH_SUCCESS:
                 theView.appendScrollPaneTextArea(theWrapper.getUserList());
+                break;
         	}
 			
 			
