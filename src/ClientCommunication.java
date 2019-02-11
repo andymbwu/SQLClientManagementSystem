@@ -81,11 +81,12 @@ public class ClientCommunication implements Constants{
             		JOptionPane.showMessageDialog(null,
                             "User was not added successfully", "Error",
                             JOptionPane.WARNING_MESSAGE);
-            		
-            		
-            		
-            		
-            		
+            	case SEARCH_FAIL:
+            	    JOptionPane.showMessageDialog(null,
+                            "No users matching the search term were found","Error",
+                            JOptionPane.WARNING_MESSAGE);
+                case SEARCH_SUCCESS:
+                    theView.appendScrollPaneTextArea(theWrapper.getUserList());
             	}
             	
             	

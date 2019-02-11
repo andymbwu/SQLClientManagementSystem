@@ -40,7 +40,7 @@ public class UserView {
 	private JTextField txtFieldSearchParameter;
 	private JButton btnSearch = new JButton("Search");
 	private JButton btnClearSearch = new JButton("Clear Search");
-	private DefaultListModel<User> userModel = new DefaultListModel();
+	private DefaultListModel<UserModel> userModel = new DefaultListModel();
 	private JList<User> userJList = new JList(userModel);
 
 	/**
@@ -298,7 +298,7 @@ public class UserView {
 	 * @param userArrayList - list of User objects that have been found using
 	 *                        one of the search methods in the Model class.
 	 */
-	public void appendScrollPaneTextArea(ArrayList<User> userArrayList) {
+	public void appendScrollPaneTextArea(ArrayList<UserModel> userArrayList) {
 		for (int i = 0; i < userArrayList.size(); i++)
 			userModel.addElement(userArrayList.get(i));
 	}
