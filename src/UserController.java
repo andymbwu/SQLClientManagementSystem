@@ -24,6 +24,7 @@ public class UserController implements Constants {
     public UserController(UserView theView, UserModel theModel, ClientCommunication comm) {
         this.theView = theView;
         this.theModel = theModel;
+        this.theWrapper = new UserWrapper();
 
         /**
          * This method registers an action listener to the "Search" button in the GUI.
@@ -34,6 +35,7 @@ public class UserController implements Constants {
             @Override
             public void actionPerformed(ActionEvent e) {
                 theView.disableSearchButton();
+                System.out.println(theView.getSearchParameter());
                 theWrapper.setQuery(theView.getSearchParameter());
                 theWrapper.setUserList(null);
                 if (theView.checkRadioButtonUserID() == true) {

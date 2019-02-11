@@ -9,6 +9,6 @@ public class MVCUser {
 		UserView view = new UserView();
 		UserModel model = new UserModel();
 
-		UserController controller = new UserController(view, model);
+//		UserController controller = new UserController(view, model);
 	}
 }
