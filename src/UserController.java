@@ -14,6 +14,7 @@ public class UserController {
 
 	private UserView theView;
 	private UserModel theModel;
+	private UserWrapper theWrapper;
 
 	public UserController(UserView theView, UserModel theModel) {
 		this.theView = theView;

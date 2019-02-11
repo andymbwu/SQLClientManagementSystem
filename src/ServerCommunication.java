@@ -1,9 +1,6 @@
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
@@ -11,17 +8,15 @@ import java.util.concurrent.Executors;
 
 
 public class ServerCommunication {
-	
-//	Socket xSocket;
-//	Socket oSocket;
-	Socket aSocket;
-	ServerSocket serverSocket;
-	DBController db;
 
-//	PrintWriter xSocketOut;
-//	PrintWriter oSocketOut;
-//	BufferedReader xSocketIn;
-//	BufferedReader oSocketIn;
+	private Socket aSocket;
+	private ServerSocket serverSocket = null;
+	private DBController db;
+
+	private ObjectOutputStream objOut = null;
+	private ObjectInputStream objIn = null;
+
+	public static final int port = 9899;
 	
 	/**
 	 * Thread Pool to Handle Communication.
@@ -33,7 +28,7 @@ public class ServerCommunication {
 		this.db = new DBController();
 		
 		try {
-			serverSocket = new ServerSocket(9899);
+			serverSocket = new ServerSocket(port);
 			this.pool = Executors.newFixedThreadPool(5);
 			
 		} catch (IOException e) {
@@ -45,21 +40,14 @@ public class ServerCommunication {
 
 	public void runServer() {
 		try {
-
 			while (true) {
 				aSocket = serverSocket.accept();
 				System.out.println("Client has been connected");
-				
-//				oSocket = serverSocket.accept();
-//				System.out.println("TicTacToe.Player O has been connected");
 
-//				xSocketIn = new BufferedReader((new InputStreamReader(xSocket.getInputStream())));
-//				oSocketIn = new BufferedReader((new InputStreamReader(oSocket.getInputStream())));
-//				xSocketOut = new PrintWriter(xSocket.getOutputStream(), true);
-//				oSocketOut = new PrintWriter(oSocket.getOutputStream(), true);
-				
-				//TicTacToe.Game needs to have both sockets as input arguments to it's constructor
 				ServerController sc = new ServerController(this.db, this.aSocket);
+				objOut = new ObjectOutputStream(aSocket.getOutputStream());
+				objIn = new ObjectInputStream(aSocket.getInputStream());
+
 				
 				pool.execute(sc);
 			}
