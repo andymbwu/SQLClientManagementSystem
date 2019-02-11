@@ -223,7 +223,7 @@ public class DBController implements Constants {
 	 *               that needs to be updated.
 	 */
 	public int updateExistingUser(UserModel user) {
-
+		
 		String sql = "UPDATE " + tableName + " SET FIRSTNAME = ?, LASTNAME = ?, ADDRESS = ?,"
 				+ " POSTALCODE = ?, PHONENUMBER = ?, USERTYPE = ? WHERE ID = ?";
 
@@ -238,6 +238,13 @@ public class DBController implements Constants {
 			preparedStatement.setInt(7, user.getID());
 
 			preparedStatement.executeUpdate();
+			System.out.println("in updateExistingUser in DBController");
+			System.out.println(user.getFirstName());
+	    	System.out.println(user.getLastName());
+	    	System.out.println(user.getAddress());
+	    	System.out.println(user.getPhoneNumber());
+	    	System.out.println(user.getPostalCode());
+	    	System.out.println(user.getUserType());
 			
 			return UPDATE_SUCCESS;
 
@@ -270,7 +277,9 @@ public class DBController implements Constants {
 						user.getString("ADDRESS"), user.getString("POSTALCODE"), user.getString("PHONENUMBER"),
 						user.getString("USERTYPE")));
 			}
+			System.out.println(temp.size());
 			return temp;
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -306,9 +315,10 @@ public class DBController implements Constants {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return null;
 		}
 
-		return null;
+		
 	}
 
 	/**

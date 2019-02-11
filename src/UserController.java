@@ -133,7 +133,7 @@ public class UserController implements Constants {
                 theWrapper.setAction(DELETE_USER);
                 theWrapper.setUserList(null);
                 theWrapper.setQuery(theView.getID());
-                comm.write(theWrapper);
+                comm.communicate(theWrapper);
                 
 //                try {
 //                    objOut.writeObject(theWrapper);
@@ -199,7 +199,7 @@ public class UserController implements Constants {
                 	userList.add(user);
                     theWrapper.setUserList(userList);
                     
-                    comm.write(theWrapper);
+                    comm.communicate(theWrapper);
                     
 //                    try {
 //                        objOut.writeObject(theWrapper);
@@ -259,6 +259,12 @@ public class UserController implements Constants {
                             "Phone number must not be blank and must be in format " + "### - ### - ####.", "Error",
                             JOptionPane.WARNING_MESSAGE);
                 } else {
+                	System.out.println(firstName);
+                	System.out.println(lastName);
+                	System.out.println(address);
+                	System.out.println(postalCode);
+                	System.out.println(phoneNumber);
+                	System.out.println(userType);
                 	
                 	theWrapper.setAction(UPDATE_USER);
 
@@ -267,7 +273,7 @@ public class UserController implements Constants {
                 	userList.add(user);
                     theWrapper.setUserList(userList);
                     
-                    comm.write(theWrapper);
+                    comm.communicate(theWrapper);
                     
 //                    try {
 //                        objOut.writeObject(theWrapper);

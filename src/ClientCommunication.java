@@ -235,6 +235,7 @@ public class ClientCommunication implements Constants{
 				e.printStackTrace();
 			}
         	int action = theWrapper.getAction();
+        	System.out.println("Action is " + action);
         	
         	switch(action) {
         	case DELETE_SUCCESS:
@@ -273,15 +274,15 @@ public class ClientCommunication implements Constants{
                         JOptionPane.WARNING_MESSAGE);
         		break;
         		
+            case SEARCH_SUCCESS:
+                theView.appendScrollPaneTextArea(theWrapper.getUserList());
+                break;                
+        	
         	case SEARCH_FAIL:
         	    JOptionPane.showMessageDialog(null,
                         "No users matching the search term were found","Error",
                         JOptionPane.WARNING_MESSAGE);
         	    break;
-        	    
-            case SEARCH_SUCCESS:
-                theView.appendScrollPaneTextArea(theWrapper.getUserList());
-                break;
         	}
 			
 			

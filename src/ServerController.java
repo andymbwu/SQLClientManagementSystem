@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ServerController implements Runnable, Constants {
 
@@ -39,31 +40,40 @@ public class ServerController implements Runnable, Constants {
             String query = userInput.getQuery();
             
             int action = userInput.getAction();
+            
             System.out.println(query);
             System.out.println(action);
         
             	
             switch(action){
                 case SEARCH_LAST_NAME:
-                	System.out.println("in search last name switch");
+//                	System.out.println("in search last name switch");
             		userOutput = new UserWrapper();
-                	if(db.searchUserLastName(query) != null) {
-                		userOutput.setUserList(db.searchUserLastName(query));
+            		ArrayList<UserModel> searchLastName = new ArrayList<UserModel>();
+            		searchLastName = db.searchUserLastName(query);
+                	if(searchLastName.size() != 0) {
+                		userOutput.setUserList(searchLastName);
                 		userOutput.setAction(SEARCH_SUCCESS);
                 		write(userOutput);
+//                		System.out.println("In if");
                 	} else {
                 		userOutput.setAction(SEARCH_FAIL);
                 		userOutput.setUserList(null);
                 		write(userOutput);
+//                		System.out.println("In else");
                 	}
+//                	System.out.println("Exiting search last name switch with " + userOutput.getAction() + " as action");
                 	break;
                 	
                 case SEARCH_USER_ID:
                 	System.out.println("in search id switch");
-            		userOutput = new UserWrapper();
-                	if(db.searchUserID(Integer.parseInt(query)) != null) {
-                		userOutput.setUserList(db.searchUserID(Integer.parseInt(query)));
+                	userOutput = new UserWrapper();
+            		ArrayList<UserModel> searchID = new ArrayList<UserModel>();
+            		searchID = db.searchUserID(Integer.parseInt(query));
+            		System.out.println("Size of user id search results: " + searchID.size());
+                	if(searchID.size() != 0) {
                 		userOutput.setAction(SEARCH_SUCCESS);
+                		userOutput.setUserList(searchID);
                 		write(userOutput);
                 	} else {
                 		userOutput.setAction(SEARCH_FAIL);
@@ -75,8 +85,10 @@ public class ServerController implements Runnable, Constants {
                 case SEARCH_USER_TYPE:
                 	System.out.println("in search type switch");
                 	userOutput = new UserWrapper();
-                	if(db.searchUserType(query) != null) {
-                		userOutput.setUserList(db.searchUserType(query));
+                	ArrayList<UserModel> searchType = new ArrayList<UserModel>();
+                	searchType = db.searchUserType(query);
+                	if(searchType.size() != 0) {
+                		userOutput.setUserList(searchType);
                 		userOutput.setAction(SEARCH_SUCCESS);
                 		write(userOutput);
                 	} else {
@@ -103,7 +115,8 @@ public class ServerController implements Runnable, Constants {
                 	System.out.println("in add switch");
                 	userOutput = new UserWrapper();
                 	UserModel addUser = userInput.getUserList().get(0);
-                	if(db.addUser(addUser) == ADD_SUCCESS) {
+                	int add = db.addUser(addUser);
+                	if(add == ADD_SUCCESS) {
                 		userOutput.setAction(ADD_SUCCESS);
                 		write(userOutput);
                 	} else {
@@ -111,23 +124,30 @@ public class ServerController implements Runnable, Constants {
                 		userOutput.setUserList(null);
                 		write(userOutput);
                 	}
-                	
                 	break;
                 	
                 case UPDATE_USER:
                 	System.out.println("in update switch");                	
                 	userOutput = new UserWrapper();
                 	UserModel updateUser = userInput.getUserList().get(0);
-                	if(db.updateExistingUser(updateUser) == UPDATE_SUCCESS) {
+                	System.out.println(updateUser.getFirstName());
+                	System.out.println(updateUser.getLastName());
+                	System.out.println(updateUser.getAddress());
+                	System.out.println(updateUser.getPhoneNumber());
+                	System.out.println(updateUser.getPostalCode());
+                	System.out.println(updateUser.getUserType());
+                	
+                	int temp = db.updateExistingUser(updateUser);
+                	System.out.println("Returned from  update with " + temp);
+                	
+                	if(temp == UPDATE_SUCCESS) {
                 		userOutput.setAction(UPDATE_SUCCESS);
                 		write(userOutput);
                 	} else {
                 		userOutput.setAction(UPDATE_FAIL);
-                		userOutput.setUserList(null);
+//                		userOutput.setUserList(null);
                 		write(userOutput);
-                		
                 	}
-
                 	break;
             }
 
