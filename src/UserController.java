@@ -34,6 +34,7 @@ public class UserController implements Constants {
         theView.registerSearchListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	theWrapper.clear();
                 theView.disableSearchButton();
                 System.out.println(theView.getSearchParameter());
                 theWrapper.setQuery(theView.getSearchParameter());
@@ -41,9 +42,11 @@ public class UserController implements Constants {
                 if (theView.checkRadioButtonUserID() == true) {
 //					theView.appendScrollPaneTextArea("");
                     theWrapper.setAction(SEARCH_USER_ID);
+                    
                 } else if (theView.checkRadioButtonLastName() == true) {
 //                    theView.appendScrollPaneTextArea(theModel.searchUserLastName(theView.getSearchParameter()));
                     theWrapper.setAction(Constants.SEARCH_LAST_NAME);
+                    System.out.println(theWrapper.toString());
                 } else if (theView.checkRadioButtonUserType() == true) {
 //                    theView.appendScrollPaneTextArea(theModel.searchUserType(theView.getSearchParameter()));
                     theWrapper.setAction(Constants.SEARCH_USER_TYPE);

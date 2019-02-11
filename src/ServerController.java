@@ -28,6 +28,7 @@ public class ServerController implements Runnable, Constants {
 	public void run() {
         while (true) {        	
         	try {
+        		userInput = new UserWrapper();
                 userInput = (UserWrapper)objIn.readObject();
                 
             } catch (IOException e) {
@@ -37,12 +38,13 @@ public class ServerController implements Runnable, Constants {
             }
             String query = userInput.getQuery();
             int action = userInput.getAction();
-            UserModel user = userInput.getUserList().get(0);
+        
+            	
             switch(action){
                 case SEARCH_LAST_NAME:
             		userOutput = new UserWrapper();
-                	if(db.searchUserLastName(user.getLastName()) != null) {
-                		userOutput.setUserList(db.searchUserLastName(user.getLastName()));
+                	if(db.searchUserLastName(query) != null) {
+                		userOutput.setUserList(db.searchUserLastName(query));
                 		userOutput.setAction(SEARCH_SUCCESS);
                 		write(userOutput);
                 	} else {
@@ -54,8 +56,8 @@ public class ServerController implements Runnable, Constants {
 //                	break;
                 case SEARCH_USER_ID:
             		userOutput = new UserWrapper();
-                	if(db.searchUserLastName(user.getLastName()) != null) {
-                		userOutput.setUserList(db.searchUserID(user.getID()));
+                	if(db.searchUserID(Integer.parseInt(query)) != null) {
+                		userOutput.setUserList(db.searchUserID(Integer.parseInt(query)));
                 		userOutput.setAction(SEARCH_SUCCESS);
                 		write(userOutput);
                 	} else {
@@ -66,8 +68,8 @@ public class ServerController implements Runnable, Constants {
 //                	break;
                 case SEARCH_USER_TYPE:
                 	userOutput = new UserWrapper();
-                	if(db.searchUserLastName(user.getLastName()) != null) {
-                		userOutput.setUserList(db.searchUserType(user.getUserType()));
+                	if(db.searchUserType(query) != null) {
+                		userOutput.setUserList(db.searchUserType(query));
                 		userOutput.setAction(SEARCH_SUCCESS);
                 		write(userOutput);
                 	} else {
@@ -78,7 +80,7 @@ public class ServerController implements Runnable, Constants {
 //                	break;
                 case DELETE_USER:
             		userOutput = new UserWrapper();
-                	if(db.deleteUser(user.getID()) == DELETE_SUCCESS) {
+                	if(db.deleteUser(Integer.parseInt(query)) == DELETE_SUCCESS) {
                 		userOutput.setAction(DELETE_SUCCESS);
                 		write(userOutput);
                 	} else {
@@ -90,7 +92,8 @@ public class ServerController implements Runnable, Constants {
 //                	break;
                 case ADD_USER:
                 	userOutput = new UserWrapper();
-                	if(db.addUser(user) == ADD_SUCCESS) {
+                	UserModel addUser = userInput.getUserList().get(0);
+                	if(db.addUser(addUser) == ADD_SUCCESS) {
                 		userOutput.setAction(ADD_SUCCESS);
                 		write(userOutput);
                 	} else {
@@ -102,7 +105,8 @@ public class ServerController implements Runnable, Constants {
 //                	break;
                 case UPDATE_USER:                	
                 	userOutput = new UserWrapper();
-                	if(db.updateExistingUser(user) == UPDATE_SUCCESS) {
+                	UserModel updateUser = userInput.getUserList().get(0);
+                	if(db.updateExistingUser(updateUser) == UPDATE_SUCCESS) {
                 		userOutput.setAction(UPDATE_SUCCESS);
                 		write(userOutput);
                 	} else {

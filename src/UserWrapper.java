@@ -43,10 +43,14 @@ public class UserWrapper implements Constants, Serializable {
 	}
 
 
+	public void clear() {
+		this.action = 0;
+		this.query = "";
+		this.userList=null;
+	}
 	
-	
-	
-	
-	
+//	public String toString() {
+//		userList.get(0)
+//	}
 	
 }
