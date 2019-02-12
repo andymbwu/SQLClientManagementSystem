@@ -394,7 +394,7 @@ public class UserView {
 	private void initialize() {
 		frame = new JFrame("User Management Screen");
 		frame.setBounds(100, 100, 650, 650);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 
 		JSplitPane splitPaneHorizontal = new JSplitPane();
