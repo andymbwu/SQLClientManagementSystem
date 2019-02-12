@@ -40,24 +40,26 @@ public class ServerController implements Runnable, Constants {
 	 * depending on the action id
 	 */
 	public void run() {
-        while (true) {        	
+        while (true) {
         	try {
         		userInput = new UserWrapper();
                 userInput = (UserWrapper)objIn.readObject();
-                
+
             } catch (IOException e) {
                 e.printStackTrace();
+                System.exit(0);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+                System.exit(0);
             }
             String query = userInput.getQuery();
-            
+
             int action = userInput.getAction();
-            
+
             System.out.println(query);
             System.out.println(action);
-        
-            	
+
+
             switch(action){
                 case SEARCH_LAST_NAME:
 //                	System.out.println("in search last name switch");
@@ -77,7 +79,7 @@ public class ServerController implements Runnable, Constants {
                 	}
 //                	System.out.println("Exiting search last name switch with " + userOutput.getAction() + " as action");
                 	break;
-                	
+
                 case SEARCH_USER_ID:
                 	System.out.println("in search id switch");
                 	userOutput = new UserWrapper();
@@ -94,7 +96,7 @@ public class ServerController implements Runnable, Constants {
                 		write(userOutput);
                 	}
                 	break;
-                	
+
                 case SEARCH_USER_TYPE:
                 	System.out.println("in search type switch");
                 	userOutput = new UserWrapper();
@@ -110,7 +112,7 @@ public class ServerController implements Runnable, Constants {
                 		write(userOutput);
                 	}
                 	break;
-                	
+
                 case DELETE_USER:
                 	System.out.println("in delete switch");
             		userOutput = new UserWrapper();
@@ -123,7 +125,7 @@ public class ServerController implements Runnable, Constants {
                 		write(userOutput);
                 	}
                 	break;
-                	
+
                 case ADD_USER:
                 	System.out.println("in add switch");
                 	userOutput = new UserWrapper();
@@ -138,9 +140,9 @@ public class ServerController implements Runnable, Constants {
                 		write(userOutput);
                 	}
                 	break;
-                	
+
                 case UPDATE_USER:
-                	System.out.println("in update switch");                	
+                	System.out.println("in update switch");
                 	userOutput = new UserWrapper();
                 	UserModel updateUser = userInput.getUserList().get(0);
                 	System.out.println(updateUser.getFirstName());
@@ -154,7 +156,7 @@ public class ServerController implements Runnable, Constants {
                 	int temp = db.updateExistingUser(updateUser);
 //					System.out.println(db.searchUserID(updateUser.getID()).get(0));
                 	System.out.println("Returned from  update with " + temp);
-                	
+
                 	if(temp == UPDATE_SUCCESS) {
                 		userOutput.setAction(UPDATE_SUCCESS);
 						userOutput.setUserList(null);
@@ -168,7 +170,7 @@ public class ServerController implements Runnable, Constants {
             }
 
         }
-        
+
 	}
 
 	/**
