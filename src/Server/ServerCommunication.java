@@ -16,9 +16,6 @@ public class ServerCommunication {
 	private ServerSocket serverSocket = null;
 	private DBController db;
 
-	private ObjectOutputStream objOut = null;
-	private ObjectInputStream objIn = null;
-
 	public static final int port = 9809;
 	
 	/**
