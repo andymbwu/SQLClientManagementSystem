@@ -46,17 +46,6 @@ public class ClientCommunication implements Constants{
         }
     }
 
-	public void write(UserWrapper out) {
-		// TODO Auto-generated method stub
-		
-		try {
-			objOut.writeObject(out);
-			objOut.reset();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	public void communicate(UserWrapper u) {
 		try {
 			objOut.writeObject(u);
