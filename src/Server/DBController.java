@@ -228,38 +228,11 @@ public class DBController implements Constants {
 	 */
 	public synchronized int updateExistingUser(UserModel user) {
 		try {
-			jdbc_connection.setAutoCommit(true);
+			jdbc_connection.setAutoCommit(false);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-//		String sql = "UPDATE " + tableName + " SET FIRSTNAME = ?, LASTNAME = ?, ADDRESS = ?,"
-//				+ " POSTALCODE = ?, PHONENUMBER = ?, USERTYPE = ? WHERE ID = ?";
-//
-//		try {
-//			preparedStatement = jdbc_connection.prepareStatement(sql);
-//			preparedStatement.setString(1, user.getFirstName());
-//			preparedStatement.setString(2, user.getLastName());
-//			preparedStatement.setString(3, user.getAddress());
-//			preparedStatement.setString(4, user.getPostalCode());
-//			preparedStatement.setString(5, user.getPhoneNumber());
-//			preparedStatement.setString(6, user.getUserType());
-//			preparedStatement.setInt(7, user.getID());
-//
-//			preparedStatement.executeUpdate();
-//			System.out.println("in updateExistingUser in DBController");
-//			System.out.println(user.getFirstName());
-//	    	System.out.println(user.getLastName());
-//	    	System.out.println(user.getAddress());
-//	    	System.out.println(user.getPhoneNumber());
-//	    	System.out.println(user.getPostalCode());
-//	    	System.out.println(user.getUserType());
-//
-//			return UPDATE_SUCCESS;
-//
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			return UPDATE_FAIL;
-//		}
+
 		String sql = "UPDATE " + tableName + " SET FIRSTNAME = ?, LASTNAME = ?, ADDRESS = ?,"
 				+ " POSTALCODE = ?, PHONENUMBER = ?, USERTYPE = ? WHERE ID = ?";
 

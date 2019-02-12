@@ -62,7 +62,6 @@ public class ServerController implements Runnable, Constants {
 
             switch(action){
                 case SEARCH_LAST_NAME:
-//                	System.out.println("in search last name switch");
             		userOutput = new UserWrapper();
             		ArrayList<UserModel> searchLastName = new ArrayList<UserModel>();
             		searchLastName = db.searchUserLastName(query);
@@ -70,14 +69,11 @@ public class ServerController implements Runnable, Constants {
                 		userOutput.setUserList(searchLastName);
                 		userOutput.setAction(SEARCH_SUCCESS);
                 		write(userOutput);
-//                		System.out.println("In if");
                 	} else {
                 		userOutput.setAction(SEARCH_FAIL);
                 		userOutput.setUserList(null);
                 		write(userOutput);
-//                		System.out.println("In else");
                 	}
-//                	System.out.println("Exiting search last name switch with " + userOutput.getAction() + " as action");
                 	break;
 
                 case SEARCH_USER_ID:
@@ -154,7 +150,6 @@ public class ServerController implements Runnable, Constants {
 
 					System.out.println("The array size is: " + userInput.getUserList().size());
                 	int temp = db.updateExistingUser(updateUser);
-//					System.out.println(db.searchUserID(updateUser.getID()).get(0));
                 	System.out.println("Returned from  update with " + temp);
 
                 	if(temp == UPDATE_SUCCESS) {
@@ -163,7 +158,7 @@ public class ServerController implements Runnable, Constants {
                 		write(userOutput);
                 	} else {
                 		userOutput.setAction(UPDATE_FAIL);
-//                		userOutput.setUserList(null);
+                		userOutput.setUserList(null);
                 		write(userOutput);
                 	}
                 	break;

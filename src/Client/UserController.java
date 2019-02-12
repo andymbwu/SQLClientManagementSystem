@@ -23,7 +23,6 @@ public class UserController implements Constants {
     private UserModel theModel;
 
     private UserWrapper theWrapper;
-//    private ObjectOutputStream objOut = null;
 
     /**
      * Constructor that initializes View, Model, and Client Communication objects, registers all anonymous action listeners to user GUI
@@ -50,15 +49,12 @@ public class UserController implements Constants {
                 theWrapper.setQuery(theView.getSearchParameter());
                 theWrapper.setUserList(null);
                 if (theView.checkRadioButtonUserID() == true) {
-//					theView.appendScrollPaneTextArea("");
                     theWrapper.setAction(SEARCH_USER_ID);
                     
                 } else if (theView.checkRadioButtonLastName() == true) {
-//                    theView.appendScrollPaneTextArea(theModel.searchUserLastName(theView.getSearchParameter()));
                     theWrapper.setAction(Constants.SEARCH_LAST_NAME);
                     System.out.println(theWrapper.toString());
                 } else if (theView.checkRadioButtonUserType() == true) {
-//                    theView.appendScrollPaneTextArea(theModel.searchUserType(theView.getSearchParameter()));
                     theWrapper.setAction(Constants.SEARCH_USER_TYPE);
                 }
                 comm.communicate(theWrapper);
@@ -139,20 +135,11 @@ public class UserController implements Constants {
         theView.registerDeleteUserListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                theModel.deleteUser(Integer.parseInt(theView.getID()));
                 theWrapper.setAction(DELETE_USER);
                 theWrapper.setUserList(null);
                 theWrapper.setQuery(theView.getID());
                 comm.communicate(theWrapper);
-                
-//                try {
-//                    objOut.writeObject(theWrapper);
-//                    System.out.println("Delete user written to socket");
-//                } catch (IOException e1) {
-//                    e1.printStackTrace();
-//                }
-//                JOptionPane.showMessageDialog(null, "User successfully deleted!", "Delete User",
-//                        JOptionPane.INFORMATION_MESSAGE);
+
             }
         });
 
@@ -210,13 +197,7 @@ public class UserController implements Constants {
                     theWrapper.setUserList(userList);
                     
                     comm.communicate(theWrapper);
-                    
-//                    try {
-//                        objOut.writeObject(theWrapper);
-//                        System.out.println("Add user written to socket");
-//                    } catch (IOException e1) {
-//                        e1.printStackTrace();
-//                    }
+
                 }
             }
         });
@@ -269,12 +250,6 @@ public class UserController implements Constants {
                             "Phone number must not be blank and must be in format " + "### - ### - ####.", "Error",
                             JOptionPane.WARNING_MESSAGE);
                 } else {
-                	System.out.println(firstName);
-                	System.out.println(lastName);
-                	System.out.println(address);
-                	System.out.println(postalCode);
-                	System.out.println(phoneNumber);
-                	System.out.println(userType);
                 	
                 	theWrapper.setAction(UPDATE_USER);
 

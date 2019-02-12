@@ -61,7 +61,6 @@ public class ServerCommunication {
 			try {
 				aSocket.close();
 			} catch (IOException e1) {
-//				e1.printStackTrace();
 				System.out.println("Client disconnected.");
 
 			}
