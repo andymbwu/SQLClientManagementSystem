@@ -141,12 +141,15 @@ public class ServerController implements Runnable, Constants {
                 	System.out.println(updateUser.getPhoneNumber());
                 	System.out.println(updateUser.getPostalCode());
                 	System.out.println(updateUser.getUserType());
-                	
+
+					System.out.println("The array size is: " + userInput.getUserList().size());
                 	int temp = db.updateExistingUser(updateUser);
+//					System.out.println(db.searchUserID(updateUser.getID()).get(0));
                 	System.out.println("Returned from  update with " + temp);
                 	
                 	if(temp == UPDATE_SUCCESS) {
                 		userOutput.setAction(UPDATE_SUCCESS);
+						userOutput.setUserList(null);
                 		write(userOutput);
                 	} else {
                 		userOutput.setAction(UPDATE_FAIL);

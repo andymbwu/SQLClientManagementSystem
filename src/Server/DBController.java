@@ -227,7 +227,39 @@ public class DBController implements Constants {
 	 *               that needs to be updated.
 	 */
 	public synchronized int updateExistingUser(UserModel user) {
-		
+		try {
+			jdbc_connection.setAutoCommit(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+//		String sql = "UPDATE " + tableName + " SET FIRSTNAME = ?, LASTNAME = ?, ADDRESS = ?,"
+//				+ " POSTALCODE = ?, PHONENUMBER = ?, USERTYPE = ? WHERE ID = ?";
+//
+//		try {
+//			preparedStatement = jdbc_connection.prepareStatement(sql);
+//			preparedStatement.setString(1, user.getFirstName());
+//			preparedStatement.setString(2, user.getLastName());
+//			preparedStatement.setString(3, user.getAddress());
+//			preparedStatement.setString(4, user.getPostalCode());
+//			preparedStatement.setString(5, user.getPhoneNumber());
+//			preparedStatement.setString(6, user.getUserType());
+//			preparedStatement.setInt(7, user.getID());
+//
+//			preparedStatement.executeUpdate();
+//			System.out.println("in updateExistingUser in DBController");
+//			System.out.println(user.getFirstName());
+//	    	System.out.println(user.getLastName());
+//	    	System.out.println(user.getAddress());
+//	    	System.out.println(user.getPhoneNumber());
+//	    	System.out.println(user.getPostalCode());
+//	    	System.out.println(user.getUserType());
+//
+//			return UPDATE_SUCCESS;
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			return UPDATE_FAIL;
+//		}
 		String sql = "UPDATE " + tableName + " SET FIRSTNAME = ?, LASTNAME = ?, ADDRESS = ?,"
 				+ " POSTALCODE = ?, PHONENUMBER = ?, USERTYPE = ? WHERE ID = ?";
 
@@ -242,15 +274,8 @@ public class DBController implements Constants {
 			preparedStatement.setInt(7, user.getID());
 
 			preparedStatement.executeUpdate();
-			System.out.println("in updateExistingUser in DBController");
-			System.out.println(user.getFirstName());
-	    	System.out.println(user.getLastName());
-	    	System.out.println(user.getAddress());
-	    	System.out.println(user.getPhoneNumber());
-	    	System.out.println(user.getPostalCode());
-	    	System.out.println(user.getUserType());
-			
 			return UPDATE_SUCCESS;
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -374,8 +399,6 @@ public class DBController implements Constants {
 			e.printStackTrace();
 			return DELETE_FAIL;
 		}
-		
-
 	}
 
 	/**
@@ -402,33 +425,5 @@ public class DBController implements Constants {
 	/**
 	 * The main method is used to create the database and table in the database. 
 	 */
-	public static void main(String args[]) {
-//		DBController userInfo = new DBController();
-//
-//		// You should comment this line out once the first database is created (either
-//		// here or in MySQL workbench)
-//		//userInfo.createDB();
-//
-//		//userInfo.createTable();
-//
-//		//System.out.println("\nFilling the table with users");
-//		//DBController.fillTable();
-//
-//		//System.out.println("Reading all users from the table:");
-//		//DBController.printTable();
-//
-//		// System.out.println("\nTrying to remove the table");
-//		// userInfo.removeTable();
-//
-//		try {
-//			userInfo.preparedStatement.close();
-//			userInfo.jdbc_connection.close();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} finally {
-//			System.out.println("\nThe program is finished running");
-//		}
-
-	}
 
 }

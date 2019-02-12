@@ -95,8 +95,12 @@ public class UserModel implements Serializable {
 	public String getUserType(){
 		return this.userType;
 	}
-	public String toString(){
-		return this.firstName + " " + this.lastName + " " + this.id;
+
+	public String toString()
+	{
+		String user = this.id + " " + this.firstName + " " + this.lastName + ", " + this.address +
+				", " + this.postalCode + ", " + this.phoneNumber + ", " + this.userType + "\n";
+		return user;
 	}
 	
 	/**
