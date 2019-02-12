@@ -25,7 +25,12 @@ public class UserController implements Constants {
     private UserWrapper theWrapper;
 //    private ObjectOutputStream objOut = null;
 
-
+    /**
+     * Constructor that initializes View, Model, and Client Communication objects, registers all anonymous action listeners to user GUI
+     * @param theView
+     * @param theModel
+     * @param comm
+     */
     public UserController(UserView theView, UserModel theModel, ClientCommunication comm) {
         this.theView = theView;
         this.theModel = theModel;

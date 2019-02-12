@@ -10,6 +10,10 @@ import Model.UserModel;
 import Model.Constants;
 import Model.UserWrapper;
 
+/**
+ * Class that implements runnable and receives objects from the client side via socket connection through a
+ * series of switch statements
+ */
 public class ServerController implements Runnable, Constants {
 
 	private DBController db = null;
@@ -31,6 +35,10 @@ public class ServerController implements Runnable, Constants {
 		}
 	}
 	@Override
+	/**
+	 * Method that waits for a UserWrapper to be sent from the client side and executes database commands
+	 * depending on the action id
+	 */
 	public void run() {
         while (true) {        	
         	try {
@@ -162,7 +170,12 @@ public class ServerController implements Runnable, Constants {
         }
         
 	}
-	
+
+	/**
+	 * Method that writes userOutputs from the run() method to an object to send feedback to the client side,
+	 * indicating successful or failed task
+	 * @param u: Userwrapper from run() class
+	 */
 	public void write(UserWrapper u) {
 		try {
 			objOut.writeObject(u);

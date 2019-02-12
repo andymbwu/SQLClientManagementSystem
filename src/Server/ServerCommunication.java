@@ -6,7 +6,10 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-
+/**
+ * Class responsible for running the server side, and accepting the socket connection from client. Also initializes new
+ * ServerController method that receives the inputs from the socket, and executes the thread pool
+ */
 public class ServerCommunication {
 
 	private Socket aSocket;
@@ -23,6 +26,9 @@ public class ServerCommunication {
 	 */
 	private ExecutorService pool;
 
+	/**
+	 * Creates new database controller and executes server socket that matches port number from client
+	 */
 	public ServerCommunication() { // throws IOException {
 
 		this.db = new DBController();
@@ -38,6 +44,9 @@ public class ServerCommunication {
 		System.out.println("Server is running");
 	}
 
+	/**
+	 * Starts the server and accepts the socket connection from the client
+	 */
 	public void runServer() {
 		try {
 			while (true) {
@@ -45,9 +54,6 @@ public class ServerCommunication {
 				System.out.println("Client has been connected");
 
 				ServerController sc = new ServerController(this.db, this.aSocket);
-//				objOut = new ObjectOutputStream(aSocket.getOutputStream());
-//				objIn = new ObjectInputStream(aSocket.getInputStream());
-
 				pool.execute(sc);
 			}
 
@@ -64,6 +70,11 @@ public class ServerCommunication {
 		}
 	}
 
+	/**
+	 * Main method that starts the server
+	 * @param args
+	 * @throws IOException
+	 */
 	public static void main(String[] args) throws IOException {
 		ServerCommunication myServer = new ServerCommunication();
 		myServer.runServer();

@@ -19,6 +19,9 @@ import Model.UserModel;
 import Model.UserWrapper;
 import Model.Constants;
 
+/**
+ * Class that the client side uses to communicate with the server via switch statements to a socket connection
+ */
 public class ClientCommunication implements Constants{
 
     private Socket aSocket;
@@ -31,7 +34,12 @@ public class ClientCommunication implements Constants{
 
     private UserController theController;
 
-    public ClientCommunication(String serverName,int portNumber){
+	/**
+	 * Constructor that initializes socket, object input/output streams, and MVC objects
+	 * @param serverName: Name of server
+	 * @param portNumber: Port number shared between client and server
+	 */
+	public ClientCommunication(String serverName,int portNumber){
       
         try {
             aSocket = new Socket(serverName,portNumber);
@@ -46,6 +54,10 @@ public class ClientCommunication implements Constants{
         }
     }
 
+	/**
+	 * Communicate class that is called whenever a button is pushed on the GUI to pass a UserWrapper object to server
+	 * @param u: UserWrapper object that contains user info, action key, and query
+	 */
 	public void communicate(UserWrapper u) {
 		try {
 			objOut.writeObject(u);
@@ -113,6 +125,12 @@ public class ClientCommunication implements Constants{
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Main method that runs client
+	 * @param args
+	 * @throws IOException
+	 */
 	public static void main(String[] args) throws IOException {
 
 		ClientCommunication cm = new ClientCommunication("localhost",9809);
