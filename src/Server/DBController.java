@@ -227,15 +227,7 @@ public class DBController implements Constants {
 	 *               that needs to be updated.
 	 */
 	public synchronized int updateExistingUser(UserModel user) {
-		try {
-			jdbc_connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 
-		System.out.println("ID is: " + user.getID());
-		
-		
 		String sql = "UPDATE " + tableName + " SET FIRSTNAME = ?, LASTNAME = ?, ADDRESS = ?,"
 				+ " POSTALCODE = ?, PHONENUMBER = ?, USERTYPE = ? WHERE ID = ?";
 
@@ -250,9 +242,7 @@ public class DBController implements Constants {
 			preparedStatement.setInt(7, user.getID());
 
 			preparedStatement.executeUpdate();
-			jdbc_connection.commit();
 			return UPDATE_SUCCESS;
-
 
 		} catch (SQLException e) {
 			e.printStackTrace();

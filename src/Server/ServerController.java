@@ -56,10 +56,6 @@ public class ServerController implements Runnable, Constants {
 
             int action = userInput.getAction();
 
-            System.out.println(query);
-            System.out.println(action);
-
-
             switch(action){
                 case SEARCH_LAST_NAME:
             		userOutput = new UserWrapper();
@@ -77,11 +73,9 @@ public class ServerController implements Runnable, Constants {
                 	break;
 
                 case SEARCH_USER_ID:
-                	System.out.println("in search id switch");
                 	userOutput = new UserWrapper();
             		ArrayList<UserModel> searchID = new ArrayList<UserModel>();
             		searchID = db.searchUserID(Integer.parseInt(query));
-            		System.out.println("Size of user id search results: " + searchID.size());
                 	if(searchID.size() != 0) {
                 		userOutput.setAction(SEARCH_SUCCESS);
                 		userOutput.setUserList(searchID);
@@ -94,7 +88,6 @@ public class ServerController implements Runnable, Constants {
                 	break;
 
                 case SEARCH_USER_TYPE:
-                	System.out.println("in search type switch");
                 	userOutput = new UserWrapper();
                 	ArrayList<UserModel> searchType = new ArrayList<UserModel>();
                 	searchType = db.searchUserType(query);
@@ -110,7 +103,6 @@ public class ServerController implements Runnable, Constants {
                 	break;
 
                 case DELETE_USER:
-                	System.out.println("in delete switch");
             		userOutput = new UserWrapper();
                 	if(db.deleteUser(Integer.parseInt(query)) == DELETE_SUCCESS) {
                 		userOutput.setAction(DELETE_SUCCESS);
@@ -123,7 +115,6 @@ public class ServerController implements Runnable, Constants {
                 	break;
 
                 case ADD_USER:
-                	System.out.println("in add switch");
                 	userOutput = new UserWrapper();
                 	UserModel addUser = userInput.getUserList().get(0);
                 	int add = db.addUser(addUser);
@@ -138,19 +129,10 @@ public class ServerController implements Runnable, Constants {
                 	break;
 
                 case UPDATE_USER:
-                	System.out.println("in update switch");
                 	userOutput = new UserWrapper();
                 	UserModel updateUser = userInput.getUserList().get(0);
-                	System.out.println(updateUser.getFirstName());
-                	System.out.println(updateUser.getLastName());
-                	System.out.println(updateUser.getAddress());
-                	System.out.println(updateUser.getPhoneNumber());
-                	System.out.println(updateUser.getPostalCode());
-                	System.out.println(updateUser.getUserType());
-
-					System.out.println("The array size is: " + userInput.getUserList().size());
+                	
                 	int temp = db.updateExistingUser(updateUser);
-                	System.out.println("Returned from  update with " + temp);
 
                 	if(temp == UPDATE_SUCCESS) {
                 		userOutput.setAction(UPDATE_SUCCESS);
