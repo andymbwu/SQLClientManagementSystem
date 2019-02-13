@@ -254,7 +254,7 @@ public class UserController implements Constants {
                 	theWrapper.setAction(UPDATE_USER);
 
                 	ArrayList<UserModel> userList = new ArrayList<UserModel>();
-                	UserModel user = new UserModel(firstName, lastName, address, postalCode, phoneNumber, userType);
+                	UserModel user = new UserModel(Integer.parseInt(id), firstName, lastName, address, postalCode, phoneNumber, userType);
                 	userList.add(user);
                 	theWrapper.setUserList(userList);
                     comm.communicate(theWrapper);

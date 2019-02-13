@@ -233,6 +233,9 @@ public class DBController implements Constants {
 			e.printStackTrace();
 		}
 
+		System.out.println("ID is: " + user.getID());
+		
+		
 		String sql = "UPDATE " + tableName + " SET FIRSTNAME = ?, LASTNAME = ?, ADDRESS = ?,"
 				+ " POSTALCODE = ?, PHONENUMBER = ?, USERTYPE = ? WHERE ID = ?";
 
@@ -247,6 +250,7 @@ public class DBController implements Constants {
 			preparedStatement.setInt(7, user.getID());
 
 			preparedStatement.executeUpdate();
+			jdbc_connection.commit();
 			return UPDATE_SUCCESS;
 
 
@@ -398,5 +402,33 @@ public class DBController implements Constants {
 	/**
 	 * The main method is used to create the database and table in the database. 
 	 */
+	public static void main(String[] args) {
+		DBController db = new DBController();
+		
+//		db.createDB();
+		
+		db.createTable();
+//
+		System.out.println("\nFilling the table with users");
+		db.fillTable();
+//
+		System.out.println("Reading all users from the table:");
+		db.printTable();
+
+		// System.out.println("\nTrying to remove the table");
+		//userInfo.removeTable();
+
+		try {
+			db.preparedStatement.close();
+			db.jdbc_connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			System.out.println("\nThe program is finished running");
+		}		
+			
+		
+		
+	}
 
 }
