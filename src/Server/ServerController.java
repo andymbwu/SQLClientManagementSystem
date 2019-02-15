@@ -45,13 +45,7 @@ public class ServerController implements Runnable, Constants {
         		userInput = new UserWrapper();
                 userInput = (UserWrapper)objIn.readObject();
 
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.exit(0);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-                System.exit(0);
-            }
+            
             String query = userInput.getQuery();
 
             int action = userInput.getAction();
@@ -145,7 +139,13 @@ public class ServerController implements Runnable, Constants {
                 	}
                 	break;
             }
-
+        	} catch (IOException e) {
+                System.out.println("Client has been disconnected.");
+                break;
+            } catch (ClassNotFoundException e) {
+            	System.out.println("Client has been disconnected.");
+                break;
+            }
         }
 
 	}
