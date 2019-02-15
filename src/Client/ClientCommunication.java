@@ -135,7 +135,7 @@ public class ClientCommunication implements Constants{
 	public static void main(String[] args) throws IOException {
 
 //		ClientCommunication cm = new ClientCommunication("localhost",9809);
-		ClientCommunication cm = new ClientCommunication("10.13.157.211",9809);
+		ClientCommunication cm = new ClientCommunication("10.13.101.151",9809);
 		
 	}
 
